@@ -10,8 +10,10 @@ public class Day02 {
 
     // Complete the solve function below.
     static void solve(double meal_cost, int tip_percent, int tax_percent) {
-        System.out.println((meal_cost + (meal_cost * ((double) (tip_percent / 100)))
-                + meal_cost * ((double) (tax_percent / 100))));
+        double tip = tip_percent / 100.00;
+        double tax = tax_percent / 100.00;
+        double total = meal_cost * tip + meal_cost * tax + meal_cost;
+        System.out.println(Math.round(total));
     }
 
     private static final Scanner scanner = new Scanner(System.in);
