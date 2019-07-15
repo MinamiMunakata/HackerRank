@@ -1,5 +1,7 @@
 'use strict';
 
+const fs = require('fs');
+
 process.stdin.resume();
 process.stdin.setEncoding('utf-8');
 
@@ -10,7 +12,7 @@ process.stdin.on('data', inputStdin => {
     inputString += inputStdin;
 });
 
-process.stdin.on('end', _ => {
+process.stdin.on('end', function() {
     inputString = inputString.replace(/\s*$/, '')
         .split('\n')
         .map(str => str.replace(/\s*$/, ''));
@@ -22,23 +24,22 @@ function readLine() {
     return inputString[currentLine++];
 }
 
-function printRotatedArray(a, n, d) {
+// Complete the rotLeft function below.
+function rotLeft(a, d) {
+    let n = a.length;
     for (let j = 0; j < d; j++) {
-        rotate(a, n);
+        let temp = a[0];
+        for (let i = 0; i < n - 1; i++) {
+            a[i] = a[i + 1];
+        }
+        a[n - 1] = temp;
     }
-    console.log(a.join(" "));
+    return a;
 }
-
-function rotate(a, n) {
-    let temp = a[0];
-    for (let i = 0; i < n - 1; i++) {
-        a[i] = a[i + 1];
-    }
-    a[n - 1] = temp;
-}
-
 
 function main() {
+    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+
     const nd = readLine().split(' ');
 
     const n = parseInt(nd[0], 10);
@@ -47,6 +48,9 @@ function main() {
 
     const a = readLine().split(' ').map(aTemp => parseInt(aTemp, 10));
 
-    printRotatedArray(a, n, d);
+    const result = rotLeft(a, d);
 
+    ws.write(result.join(' ') + '\n');
+
+    ws.end();
 }
